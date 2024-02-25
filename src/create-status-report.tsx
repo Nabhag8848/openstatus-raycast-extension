@@ -1,5 +1,6 @@
-import { Action, ActionPanel, Form, Icon, PopToRootType, showHUD } from "@raycast/api";
-
+import { Action, ActionPanel, Form, Icon, PopToRootType, Toast, showHUD, showToast } from "@raycast/api";
+import { openstatus } from "./services/OpenStatusSDK";
+import { StatusReport } from "./types/api";
 function CreateStatusReport() {
   return (
     <Form
@@ -7,9 +8,12 @@ function CreateStatusReport() {
         <ActionPanel>
           <Action.SubmitForm
             title="Create Report"
-            onSubmit={async (values) => {
-              console.log("onSubmit", values);
-              // Todo -> Make Network Request
+            onSubmit={async (values: StatusReport) => {
+              await showToast({
+                style: Toast.Style.Animated,
+                title: "Creating Status Report",
+              });
+              await openstatus.createStatusReport(values);
               await showHUD("Status Report Created 🎉", {
                 popToRootType: PopToRootType.Immediate,
                 clearRootSearch: true,
