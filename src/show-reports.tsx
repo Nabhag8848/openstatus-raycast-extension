@@ -23,27 +23,29 @@ export default function ShowStatusReports() {
   return (
     <List isLoading={isLoading} navigationTitle="Status Reports" searchBarPlaceholder="Search Status Reports">
       {reports && reports.length > 0 ? (
-        reports.map((report) => {
-          const { id, status, title } = report;
-          return (
-            <List.Item
-              id={id.toString()}
-              title={title}
-              icon="../assets/OpenStatus.png"
-              accessories={[
-                {
-                  tag: tags[status],
-                },
-              ]}
-              actions={
-                <ActionPanel>
-                  <Action title="Update Report" icon={Icon.Pencil} />
-                </ActionPanel>
-              }
-              key={randomUUID().toString()}
-            />
-          );
-        })
+        <List.Section title="Status Reports">
+          {reports.map((report) => {
+            const { id, status, title } = report;
+            return (
+              <List.Item
+                id={id.toString()}
+                title={title}
+                icon="../assets/OpenStatus.png"
+                accessories={[
+                  {
+                    tag: tags[status],
+                  },
+                ]}
+                actions={
+                  <ActionPanel>
+                    <Action title="Update Report" icon={Icon.Pencil} />
+                  </ActionPanel>
+                }
+                key={randomUUID().toString()}
+              />
+            );
+          })}
+        </List.Section>
       ) : (
         <List.EmptyView
           title="No Status Reports"
