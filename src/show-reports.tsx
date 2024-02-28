@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { openstatus } from "./services/OpenStatusSDK";
 import { Reports } from "./types/api";
 import { tags } from "./enum/tag";
+import { randomUUID } from "crypto";
 
 export default function ShowStatusReports() {
   const [reports, setReports] = useState<Array<Reports> | undefined>();
@@ -39,6 +40,7 @@ export default function ShowStatusReports() {
                   <Action title="Update Report" icon={Icon.Pencil} />
                 </ActionPanel>
               }
+              key={randomUUID().toString()}
             />
           );
         })

@@ -10,9 +10,22 @@ export enum Status {
   RESOLVED = "resolved",
 }
 
+enum StatusColors {
+  INVESTIGATING = "#F43F5E",
+  MONITORING = "#3B82F6",
+  IDENTIFIED = "#F59E0B",
+  RESOLVED = "#22C55E",
+}
+
 export const tags: Record<Status, Tag> = {
-  [Status.INVESTIGATING]: { value: "Investigating", color: "#F43F5E" },
-  [Status.MONITORING]: { value: "Monitoring", color: "#3B82F6" },
-  [Status.IDENTIFIED]: { value: "  Identified", color: "#F59E0B" },
-  [Status.RESOLVED]: { value: "Resolved", color: "#22C55E" },
+  [Status.INVESTIGATING]: { value: "Investigating", color: StatusColors.INVESTIGATING },
+  [Status.MONITORING]: { value: "Monitoring", color: StatusColors.MONITORING },
+  [Status.IDENTIFIED]: { value: "Identified", color: StatusColors.IDENTIFIED },
+  [Status.RESOLVED]: { value: "Resolved", color: StatusColors.RESOLVED },
+};
+
+export const StatusIcons = {
+  [Status.INVESTIGATING]: { source: "status_icon_small.png", tintColor: StatusColors.INVESTIGATING },
+  [Status.IDENTIFIED]: { source: "status_icon_small.png", tintColor: StatusColors.IDENTIFIED },
+  [Status.MONITORING]: { source: "status_icon_small.png", tintColor: StatusColors.MONITORING },
 };

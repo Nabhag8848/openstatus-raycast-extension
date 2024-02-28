@@ -1,7 +1,8 @@
 import { getPreferenceValues } from "@raycast/api";
-import { Reports, ReportsResponse, StatusReport } from "../types/api";
+import { NonResolvedReports, Reports, ReportsResponse, StatusReport, UnResolvedReports } from "../types/api";
 import { Api } from "../enum/api";
 import fetch from "node-fetch";
+import { Status } from "../enum/tag";
 
 class OpenStatusSDK {
   private url: string = Api.URL;
@@ -50,6 +51,31 @@ class OpenStatusSDK {
       });
 
       return reports;
+    } catch (err) {
+      throw new Error(err as string);
+    }
+  }
+
+  async getAllUnresolvedStatusReport(): Promise<UnResolvedReports> {
+    try {
+      const reports = await this.getAllStatusReport();
+
+      const results: UnResolvedReports = {
+        [Status.INVESTIGATING]: [],
+        [Status.IDENTIFIED]: [],
+        [Status.MONITORING]: [],
+      };
+
+      const unresolvedReports = reports.filter(
+        (report) => report.status !== Status.RESOLVED,
+      ) as Array<NonResolvedReports>;
+
+      unresolvedReports.forEach((report) => {
+        const { status } = report;
+        results[status].push(report);
+      });
+
+      return results;
     } catch (err) {
       throw new Error(err as string);
     }

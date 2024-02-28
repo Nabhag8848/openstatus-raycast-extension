@@ -23,6 +23,12 @@
       "title": "Show Status Report",
       "description": "Show Status Report",
       "mode": "view"
+    },
+    {
+      "name": "unresolved-reports",
+      "title": "Unresolved Status Reports",
+      "description": "Shows Unresolved Status Reports",
+      "mode": "menu-bar"
     }
   ],
   "preferences": [
