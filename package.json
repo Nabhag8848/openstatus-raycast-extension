@@ -15,7 +15,13 @@
     {
       "name": "create-status-report",
       "title": "Create Status Report",
-      "description": "Status Report",
+      "description": "Create Status Report",
+      "mode": "view"
+    },
+    {
+      "name": "show-reports",
+      "title": "Show Status Report",
+      "description": "Show Status Report",
       "mode": "view"
     }
   ],
