@@ -20,16 +20,18 @@
     }
   ],
   "preferences": [
-      {
-        "name": "accessToken",
-        "description": "Enter your OpenStatus Access Token",
-        "type": "password",
-        "title": "Access Token",
-        "required": true
-      }
+    {
+      "name": "access_token",
+      "description": "Enter your OpenStatus Access Token",
+      "type": "password",
+      "title": "Access Token",
+      "required": true
+    }
   ],
   "dependencies": {
-    "@raycast/api": "^1.68.1"
+    "@raycast/api": "^1.68.1",
+    "@raycast/utils": "^1.12.5",
+    "node-fetch": "^3.3.2"
   },
   "devDependencies": {
     "@raycast/eslint-config": "^1.0.6",
