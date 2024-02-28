@@ -26,7 +26,7 @@
     },
     {
       "name": "unresolved-reports",
-      "title": "Unresolved Status Reports",
+      "title": "Menu Bar Reports",
       "description": "Shows Unresolved Status Reports",
       "mode": "menu-bar"
     }

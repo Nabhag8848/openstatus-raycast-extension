@@ -1,4 +1,4 @@
-import { MenuBarExtra } from "@raycast/api";
+import { Icon, MenuBarExtra, open, openExtensionPreferences } from "@raycast/api";
 import { UnResolvedReports } from "./types/api";
 import { useEffect, useState } from "react";
 import { openstatus } from "./services/OpenStatusSDK";
@@ -66,6 +66,20 @@ function UnresolvedReports() {
           })}
         </MenuBarExtra.Section>
       )}
+      <MenuBarExtra.Section title="Utilities">
+        <MenuBarExtra.Item
+          title="Dashboard"
+          icon={Icon.AppWindow}
+          shortcut={{ modifiers: ["cmd", "shift"], key: "d" }}
+          onAction={() => open("https://www.openstatus.dev/app/")}
+        />
+        <MenuBarExtra.Item
+          title="Preferences"
+          icon={Icon.Keyboard}
+          shortcut={{ modifiers: ["cmd"], key: "," }}
+          onAction={async () => await openExtensionPreferences()}
+        />
+      </MenuBarExtra.Section>
     </MenuBarExtra>
   );
 }
