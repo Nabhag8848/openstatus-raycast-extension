@@ -77,7 +77,7 @@ function CreateStatusReport() {
     <Form
       actions={
         <ActionPanel>
-          <Action.SubmitForm title="Create Report" onSubmit={onSubmit} />
+          <Action.SubmitForm title="Create Report" onSubmit={onSubmit} icon={Icon.NewDocument} />
         </ActionPanel>
       }
     >
