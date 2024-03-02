@@ -1,4 +1,4 @@
-import { Action, ActionPanel, Icon, LaunchType, List, launchCommand, useNavigation } from "@raycast/api";
+import { Action, ActionPanel, Icon, LaunchType, List, environment, launchCommand, useNavigation } from "@raycast/api";
 import { useEffect, useState } from "react";
 import { openstatus } from "./services/OpenStatusSDK";
 import { Reports } from "./types/api";
@@ -24,6 +24,13 @@ export default function UpdateStatusReports() {
     },
     [reports, isLoading],
   );
+
+  useEffect(function () {
+    if (environment.launchContext) {
+      const report = environment.launchContext.payload.report as Reports;
+      push(<UpdateStatusReportForm report={report} />);
+    }
+  }, []);
 
   return (
     <List isLoading={isLoading} navigationTitle="Update Status Report" searchBarPlaceholder="Search Status Reports">
