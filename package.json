@@ -19,9 +19,9 @@
       "mode": "view"
     },
     {
-      "name": "show-reports",
-      "title": "Show Status Report",
-      "description": "Show Status Report",
+      "name": "update-status-report",
+      "title": "Update Status Report",
+      "description": "Update Status Report",
       "mode": "view"
     },
     {

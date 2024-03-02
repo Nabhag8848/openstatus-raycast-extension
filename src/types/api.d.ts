@@ -1,6 +1,7 @@
 import { Status } from "../enum/tag";
 
 export type StatusReport = {
+  id?: number;
   title: string;
   status: string;
   date: string;

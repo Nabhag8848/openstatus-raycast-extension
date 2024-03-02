@@ -80,6 +80,47 @@ class OpenStatusSDK {
       throw new Error(err as string);
     }
   }
+
+  async getStatusReport(id: number): Promise<Reports> {
+    try {
+      const response = await fetch(this.url + `/status_report/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          [Api.KEY]: this.token,
+        },
+      });
+      const report = (await response.json()) as Reports;
+
+      return report;
+    } catch (err) {
+      throw new Error(err as string);
+    }
+  }
+
+  async updateStatusReport(report: StatusReport) {
+    try {
+      const body = {
+        status: report.status,
+        message: report.message,
+        date: new Date(report.date).toISOString(),
+        status_report_id: report.id as number,
+      };
+
+      const response = await fetch(this.url + `/status_report_update`, {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+          [Api.KEY]: this.token,
+        },
+      });
+
+      const data = await response.json();
+    } catch (err) {
+      throw new Error(err as string);
+    }
+  }
 }
 
 export const openstatus = new OpenStatusSDK();
