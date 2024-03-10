@@ -1,4 +1,4 @@
-import { Icon, MenuBarExtra, open, openExtensionPreferences } from "@raycast/api";
+import { Icon, LaunchType, MenuBarExtra, launchCommand, open, openExtensionPreferences } from "@raycast/api";
 import { UnResolvedReports } from "./types/api";
 import { useEffect, useState } from "react";
 import { openstatus } from "./services/OpenStatusSDK";
@@ -8,6 +8,19 @@ function UnresolvedReports() {
   const [reports, setReports] = useState<UnResolvedReports | undefined>();
   const isLoading = reports === undefined;
 
+  async function openUpdateStatusReportForm(id: number) {
+    const report = await openstatus.getStatusReport(id);
+    await launchCommand({
+      name: "update-status-report",
+      type: LaunchType.UserInitiated,
+      context: {
+        type: "update_report_menu_bar",
+        payload: {
+          report,
+        },
+      },
+    });
+  }
   useEffect(
     function () {
       async function onLoad() {
@@ -30,7 +43,7 @@ function UnresolvedReports() {
                 title={title}
                 key={id}
                 icon={StatusIcons[status]}
-                onAction={() => {}}
+                onAction={() => openUpdateStatusReportForm(id)}
               ></MenuBarExtra.Item>
             );
           })}
@@ -45,7 +58,7 @@ function UnresolvedReports() {
                 title={title}
                 key={id}
                 icon={StatusIcons[status]}
-                onAction={() => {}}
+                onAction={() => openUpdateStatusReportForm(id)}
               ></MenuBarExtra.Item>
             );
           })}
@@ -60,7 +73,7 @@ function UnresolvedReports() {
                 title={title}
                 key={id}
                 icon={StatusIcons[status]}
-                onAction={() => {}}
+                onAction={() => openUpdateStatusReportForm(id)}
               ></MenuBarExtra.Item>
             );
           })}
