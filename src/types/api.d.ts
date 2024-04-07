@@ -27,3 +27,16 @@ export type UnResolvedReports = {
   [Status.IDENTIFIED]: Array<NonResolvedReports>;
   [Status.MONITORING]: Array<NonResolvedReports>;
 };
+
+export type StatusPage = {
+  id: number;
+  title: string;
+  description: string;
+  slug: string;
+};
+
+export type Monitor = {
+  id: string;
+  name: string;
+  method: string;
+};

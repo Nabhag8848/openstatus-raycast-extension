@@ -1,5 +1,13 @@
 import { getPreferenceValues } from "@raycast/api";
-import { NonResolvedReports, Reports, ReportsResponse, StatusReport, UnResolvedReports } from "../types/api";
+import {
+  Monitor,
+  NonResolvedReports,
+  Reports,
+  ReportsResponse,
+  StatusPage,
+  StatusReport,
+  UnResolvedReports,
+} from "../types/api";
 import { Api } from "../enum/api";
 import fetch from "node-fetch";
 import { Status } from "../enum/tag";
@@ -117,6 +125,38 @@ class OpenStatusSDK {
       });
 
       const data = await response.json();
+    } catch (err) {
+      throw new Error(err as string);
+    }
+  }
+
+  async getAllStatusPage() {
+    try {
+      const response = await fetch(this.url + `/page`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          [Api.KEY]: this.token,
+        },
+      });
+      const data = (await response.json()) as Array<StatusPage>;
+      return data;
+    } catch (err) {
+      throw new Error(err as string);
+    }
+  }
+
+  async getAllMonitors() {
+    try {
+      const response = await fetch(this.url + `/monitor`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          [Api.KEY]: this.token,
+        },
+      });
+      const data = (await response.json()) as Array<Monitor>;
+      return data;
     } catch (err) {
       throw new Error(err as string);
     }
