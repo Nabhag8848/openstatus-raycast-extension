@@ -1,14 +1,33 @@
 import { Action, ActionPanel, Form, Icon, PopToRootType, Toast, showHUD, showToast } from "@raycast/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { openstatus } from "./services/OpenStatusSDK";
 import { Common } from "./enum/validation";
 
-import { StatusReport } from "./types/api";
+import { Monitor, StatusPage, StatusReport } from "./types/api";
 
 function CreateStatusReport() {
   const [titleError, setTitleError] = useState<string | undefined>();
   const [messageError, setMessageError] = useState<string | undefined>();
+  const [pages, setPages] = useState<Array<StatusPage> | undefined>();
+  const [monitors, setMonitors] = useState<Array<Monitor> | undefined>();
+
+  useEffect(
+    function () {
+      async function onLoad() {
+        if (pages || monitors) return;
+
+        const [statusPages, allMonitors] = await Promise.all([
+          openstatus.getAllStatusPage(),
+          openstatus.getAllMonitors(),
+        ]);
+        setPages(statusPages);
+        setMonitors(allMonitors);
+      }
+      onLoad();
+    },
+    [pages, monitors],
+  );
 
   function isFormComplete(values: StatusReport) {
     let result: boolean = true;
@@ -93,17 +112,14 @@ function CreateStatusReport() {
         }}
         onBlur={validate}
         autoFocus
-      ></Form.TextField>
+      />
       <Form.Dropdown id="status" title="Status" placeholder="Select Current Status">
-        <Form.Dropdown.Item
-          title="Investigating"
-          value="investigating"
-          icon={Icon.MagnifyingGlass}
-        ></Form.Dropdown.Item>
-        <Form.Dropdown.Item title="Identified" value="identified" icon={Icon.Fingerprint}></Form.Dropdown.Item>
-        <Form.Dropdown.Item title="Monitoring" value="monitoring" icon={Icon.Heartbeat}></Form.Dropdown.Item>
-        <Form.Dropdown.Item title="Resolved" value="resolved" icon={Icon.Check}></Form.Dropdown.Item>
+        <Form.Dropdown.Item title="Investigating" value="investigating" icon={Icon.MagnifyingGlass} />
+        <Form.Dropdown.Item title="Identified" value="identified" icon={Icon.Fingerprint} />
+        <Form.Dropdown.Item title="Monitoring" value="monitoring" icon={Icon.Heartbeat} />
+        <Form.Dropdown.Item title="Resolved" value="resolved" icon={Icon.Check} />
       </Form.Dropdown>
+      <Form.DatePicker id="date" title="Date" defaultValue={new Date()} max={new Date()} />
       <Form.TextArea
         id="message"
         title="Message"
@@ -115,8 +131,25 @@ function CreateStatusReport() {
           }
         }}
         onBlur={validate}
-      ></Form.TextArea>
-      <Form.DatePicker id="date" title="Date" defaultValue={new Date()} max={new Date()}></Form.DatePicker>
+      />
+      <Form.Separator />
+      <Form.TagPicker id="pages" title="Pages" placeholder="Select Pages">
+        {pages &&
+          pages.map((page) => {
+            const { id, title } = page;
+            return <Form.TagPicker.Item value={id.toString()} title={title} key={id} />;
+          })}
+      </Form.TagPicker>
+      <Form.Description text="Select the pages that you want to refer the incident to" />
+      <Form.Separator />
+      <Form.TagPicker id="monitors" title="Monitors" placeholder="Select Monitors">
+        {monitors &&
+          monitors.map((monitor) => {
+            const { id, name } = monitor;
+            return <Form.TagPicker.Item value={id.toString()} title={name} key={id} />;
+          })}
+      </Form.TagPicker>
+      <Form.Description text="Select the monitors that you want to refer the incident to" />
     </Form>
   );
 }
