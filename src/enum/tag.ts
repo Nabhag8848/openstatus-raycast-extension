@@ -29,3 +29,8 @@ export const StatusIcons = {
   [Status.IDENTIFIED]: { source: "status_icon_small.png", tintColor: StatusColors.IDENTIFIED },
   [Status.MONITORING]: { source: "status_icon_small.png", tintColor: StatusColors.MONITORING },
 };
+
+export const MonitorsIcons = {
+  true: { source: "status_icon.png", tintColor: "#22C55E" },
+  false: { source: "status_icon.png", tintColor: "#f97316" },
+};

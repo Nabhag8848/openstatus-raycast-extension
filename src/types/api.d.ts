@@ -4,8 +4,10 @@ export type StatusReport = {
   id?: number;
   title: string;
   status: string;
-  date: string;
+  date: string | null;
   message: string;
+  monitors_id: Array<number>;
+  pages_id: Array<number>;
 };
 
 export type Reports = {
@@ -39,4 +41,5 @@ export type Monitor = {
   id: string;
   name: string;
   method: string;
+  active: boolean;
 };

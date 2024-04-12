@@ -22,19 +22,28 @@ class OpenStatusSDK {
   }
 
   async createStatusReport(report: StatusReport) {
+    const body = {
+      ...report,
+      monitors_id: report.monitors_id.map((id) => Number(id)),
+      pages_id: report.pages_id.map((id) => Number(id)),
+    };
     try {
       const response = await fetch(this.url + "/status_report", {
         method: "POST",
-        body: JSON.stringify(report),
+        body: JSON.stringify(body),
         headers: {
           "Content-Type": "application/json",
           [Api.KEY]: this.token,
         },
       });
 
-      const data = await response.json();
+      if (!response.ok) {
+        return false;
+      }
+
+      return true;
     } catch (err) {
-      throw new Error(err as string);
+      return false;
     }
   }
 
