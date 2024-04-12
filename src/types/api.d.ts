@@ -3,18 +3,34 @@ import { Status } from "../enum/tag";
 export type StatusReport = {
   id?: number;
   title: string;
-  status: string;
-  date: string;
+  status: Status;
+  date: string | null;
   message: string;
+  monitors_id: Array<number> | null;
+  pages_id: Array<number> | null;
 };
 
 export type Reports = {
   id: number;
   title: string;
   status: Status;
+  date: string | null;
+  message: string;
+  monitors_id: Array<number>;
+  pages_id: Array<number>;
 };
 
-export type ReportsResponse = Array<Reports & { status_report_updates: Array<number> }>;
+export type ReportsResponse = Array<
+  StatusReport & {
+    id: number;
+    status_report_updates: Array<number>;
+  }
+>;
+
+export type ReportResponse = StatusReport & {
+  id: number;
+  status_report_updates: Array<number>;
+};
 
 export type NonResolvedReports = {
   id: number;
@@ -39,4 +55,5 @@ export type Monitor = {
   id: string;
   name: string;
   method: string;
+  active: boolean;
 };

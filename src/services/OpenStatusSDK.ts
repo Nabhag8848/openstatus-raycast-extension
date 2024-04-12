@@ -2,6 +2,7 @@ import { getPreferenceValues } from "@raycast/api";
 import {
   Monitor,
   NonResolvedReports,
+  ReportResponse,
   Reports,
   ReportsResponse,
   StatusPage,
@@ -22,19 +23,31 @@ class OpenStatusSDK {
   }
 
   async createStatusReport(report: StatusReport) {
+    const { monitors_id, pages_id } = report;
+    const body = {
+      ...report,
+      monitors_id: [],
+      pages_id: [],
+      ...(monitors_id && monitors_id.length && { monitors_id: monitors_id.map(Number) }),
+      ...(pages_id && pages_id.length && { pages_id: pages_id.map(Number) }),
+    };
     try {
       const response = await fetch(this.url + "/status_report", {
         method: "POST",
-        body: JSON.stringify(report),
+        body: JSON.stringify(body),
         headers: {
           "Content-Type": "application/json",
           [Api.KEY]: this.token,
         },
       });
 
-      const data = await response.json();
+      if (!response.ok) {
+        return false;
+      }
+
+      return true;
     } catch (err) {
-      throw new Error(err as string);
+      return false;
     }
   }
 
@@ -50,11 +63,17 @@ class OpenStatusSDK {
       const data = (await response.json()) as ReportsResponse;
 
       const reports = data.map((report) => {
-        const { id, title, status } = report;
+        const { id, title, status, date, message, monitors_id, pages_id } = report;
         return {
           id,
           title,
           status,
+          date,
+          message,
+          monitors_id: [],
+          pages_id: [],
+          ...(monitors_id && monitors_id.length && { monitors_id }),
+          ...(pages_id && pages_id.length && { pages_id }),
         };
       });
 
@@ -98,24 +117,35 @@ class OpenStatusSDK {
           [Api.KEY]: this.token,
         },
       });
-      const report = (await response.json()) as Reports;
+      const report = (await response.json()) as ReportResponse;
 
-      return report;
+      const { monitors_id, pages_id } = report;
+
+      return {
+        ...report,
+        monitors_id: [],
+        pages_id: [],
+        ...(monitors_id && monitors_id.length && { monitors_id }),
+        ...(pages_id && pages_id.length && { pages_id }),
+      };
     } catch (err) {
       throw new Error(err as string);
     }
   }
 
   async updateStatusReport(report: StatusReport) {
+    const { monitors_id, pages_id } = report;
     try {
       const body = {
-        status: report.status,
-        message: report.message,
-        date: new Date(report.date).toISOString(),
-        status_report_id: report.id as number,
+        ...report,
+        id: undefined,
+        monitors_id: [],
+        pages_id: [],
+        ...(monitors_id && monitors_id.length && { monitors_id: monitors_id.map((id) => Number(id)) }),
+        ...(pages_id && pages_id.length && { pages_id: pages_id.map((id) => Number(id)) }),
       };
 
-      const response = await fetch(this.url + `/status_report_update`, {
+      const response = await fetch(this.url + `/status_report/${report.id as number}/update`, {
         method: "POST",
         body: JSON.stringify(body),
         headers: {
@@ -124,9 +154,9 @@ class OpenStatusSDK {
         },
       });
 
-      const data = await response.json();
+      return response.ok;
     } catch (err) {
-      throw new Error(err as string);
+      return false;
     }
   }
 

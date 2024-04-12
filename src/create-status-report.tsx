@@ -5,6 +5,7 @@ import { openstatus } from "./services/OpenStatusSDK";
 import { Common } from "./enum/validation";
 
 import { Monitor, StatusPage, StatusReport } from "./types/api";
+import { MonitorsIcons } from "./enum/tag";
 
 function CreateStatusReport() {
   const [titleError, setTitleError] = useState<string | undefined>();
@@ -15,8 +16,6 @@ function CreateStatusReport() {
   useEffect(
     function () {
       async function onLoad() {
-        if (pages || monitors) return;
-
         const [statusPages, allMonitors] = await Promise.all([
           openstatus.getAllStatusPage(),
           openstatus.getAllMonitors(),
@@ -24,6 +23,8 @@ function CreateStatusReport() {
         setPages(statusPages);
         setMonitors(allMonitors);
       }
+
+      if (pages || monitors) return;
       onLoad();
     },
     [pages, monitors],
@@ -85,10 +86,22 @@ function CreateStatusReport() {
       style: Toast.Style.Animated,
       title: "Creating Status Report",
     });
-    await openstatus.createStatusReport(values);
-    await showHUD("Status Report Created 🎉", {
-      popToRootType: PopToRootType.Immediate,
-      clearRootSearch: true,
+
+    const isSuccess = await openstatus.createStatusReport(values);
+
+    if (isSuccess) {
+      await showHUD("Status Report Created 🎉", {
+        popToRootType: PopToRootType.Immediate,
+        clearRootSearch: true,
+      });
+
+      return;
+    }
+
+    await showToast({
+      style: Toast.Style.Failure,
+      title: "Something Went Wrong",
+      message: "Please try again. If the issue persists, please contact us",
     });
   }
 
@@ -133,20 +146,27 @@ function CreateStatusReport() {
         onBlur={validate}
       />
       <Form.Separator />
-      <Form.TagPicker id="pages" title="Pages" placeholder="Select Pages">
+      <Form.TagPicker id="pages_id" title="Pages" placeholder="Select Pages">
         {pages &&
           pages.map((page) => {
             const { id, title } = page;
-            return <Form.TagPicker.Item value={id.toString()} title={title} key={id} />;
+            return <Form.TagPicker.Item value={id.toString()} title={title} key={id} icon={Icon.Window} />;
           })}
       </Form.TagPicker>
       <Form.Description text="Select the pages that you want to refer the incident to" />
       <Form.Separator />
-      <Form.TagPicker id="monitors" title="Monitors" placeholder="Select Monitors">
+      <Form.TagPicker id="monitors_id" title="Monitors" placeholder="Select Monitors">
         {monitors &&
           monitors.map((monitor) => {
-            const { id, name } = monitor;
-            return <Form.TagPicker.Item value={id.toString()} title={name} key={id} />;
+            const { id, name, active } = monitor;
+            return (
+              <Form.TagPicker.Item
+                value={id.toString()}
+                title={name}
+                key={id}
+                icon={MonitorsIcons[active ? "true" : "false"]}
+              />
+            );
           })}
       </Form.TagPicker>
       <Form.Description text="Select the monitors that you want to refer the incident to" />
