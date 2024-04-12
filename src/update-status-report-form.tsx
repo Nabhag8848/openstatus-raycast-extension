@@ -1,13 +1,26 @@
 import { Fragment, useState } from "react";
 import { Common } from "./enum/validation";
-import { Reports, StatusReport } from "./types/api";
+import { Monitor, Reports, StatusPage, StatusReport } from "./types/api";
 import { Action, ActionPanel, Form, Icon, PopToRootType, Toast, showHUD, showToast } from "@raycast/api";
 import { openstatus } from "./services/OpenStatusSDK";
+import { MonitorsIcons } from "./enum/tag";
 
-function UpdateStatusReportForm({ report }: { report: Reports }) {
+function UpdateStatusReportForm({
+  report,
+  defaultPages,
+  defaultMonitors,
+  allMonitors,
+  allPages,
+}: {
+  report: Reports;
+  defaultPages: string[];
+  defaultMonitors: string[];
+  allPages: Array<StatusPage> | undefined;
+  allMonitors: Array<Monitor> | undefined;
+}) {
   const [titleError, setTitleError] = useState<string | undefined>();
   const [messageError, setMessageError] = useState<string | undefined>();
-  const { id, status, title } = report;
+  const { id, status, title, message, date } = report;
 
   function isFormComplete(values: StatusReport) {
     let result: boolean = true;
@@ -64,10 +77,21 @@ function UpdateStatusReportForm({ report }: { report: Reports }) {
       style: Toast.Style.Animated,
       title: "Updating Status Report",
     });
-    await openstatus.updateStatusReport({ ...values, id });
-    await showHUD("Status Report Updated 🎉", {
-      popToRootType: PopToRootType.Immediate,
-      clearRootSearch: true,
+    const isSuccess = await openstatus.updateStatusReport({ ...values, id });
+
+    if (isSuccess) {
+      await showHUD("Status Report Updated 🎉", {
+        popToRootType: PopToRootType.Immediate,
+        clearRootSearch: true,
+      });
+
+      return;
+    }
+
+    await showToast({
+      style: Toast.Style.Failure,
+      title: "Something Went Wrong",
+      message: "Please try again. If the issue persists, please contact us",
     });
   }
 
@@ -104,6 +128,12 @@ function UpdateStatusReportForm({ report }: { report: Reports }) {
           <Form.Dropdown.Item title="Monitoring" value="monitoring" icon={Icon.Heartbeat}></Form.Dropdown.Item>
           <Form.Dropdown.Item title="Resolved" value="resolved" icon={Icon.Check}></Form.Dropdown.Item>
         </Form.Dropdown>
+        <Form.DatePicker
+          id="date"
+          title="Date"
+          defaultValue={new Date(date as string)}
+          max={new Date()}
+        ></Form.DatePicker>
         <Form.TextArea
           id="message"
           title="Message"
@@ -115,8 +145,33 @@ function UpdateStatusReportForm({ report }: { report: Reports }) {
             }
           }}
           onBlur={validate}
+          defaultValue={message}
         ></Form.TextArea>
-        <Form.DatePicker id="date" title="Date" defaultValue={new Date()} max={new Date()}></Form.DatePicker>
+        <Form.Separator />
+        <Form.TagPicker id="pages_id" title="Pages" placeholder="Select Pages" defaultValue={defaultPages}>
+          {allPages &&
+            allPages.map((page) => {
+              const { id, title } = page;
+              return <Form.TagPicker.Item value={id.toString()} title={title} key={id} icon={Icon.Window} />;
+            })}
+        </Form.TagPicker>
+        <Form.Description text="Select the pages that you want to refer the incident to" />
+        <Form.Separator />
+        <Form.TagPicker id="monitors_id" title="Monitors" placeholder="Select Monitors" defaultValue={defaultMonitors}>
+          {allMonitors &&
+            allMonitors.map((monitor) => {
+              const { id, name, active } = monitor;
+              return (
+                <Form.TagPicker.Item
+                  value={id.toString()}
+                  title={name}
+                  key={id}
+                  icon={MonitorsIcons[active ? "true" : "false"]}
+                />
+              );
+            })}
+        </Form.TagPicker>
+        <Form.Description text="Select the monitors that you want to refer the incident to" />
       </Form>
     </Fragment>
   );

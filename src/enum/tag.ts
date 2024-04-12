@@ -1,3 +1,5 @@
+import { Color } from "@raycast/api";
+
 interface Tag {
   color: string;
   value: string;
@@ -33,4 +35,22 @@ export const StatusIcons = {
 export const MonitorsIcons = {
   true: { source: "status_icon.png", tintColor: "#22C55E" },
   false: { source: "status_icon.png", tintColor: "#f97316" },
+};
+
+export const StatusMessage = {
+  [Status.INVESTIGATING]: { value: "Investigating  ", color: Color.Red },
+  [Status.MONITORING]: { value: "Monitoring    ", color: Color.Blue },
+  [Status.IDENTIFIED]: { value: "Identified     ", color: Color.Yellow },
+  [Status.RESOLVED]: { value: "Resolved     ", color: Color.Green },
+};
+
+export const StatusListIcons = {
+  [Status.INVESTIGATING]: {
+    source: "status_icon.png",
+    tintColor: StatusColors.INVESTIGATING,
+    tooltip: "Investigating",
+  },
+  [Status.IDENTIFIED]: { source: "status_icon.png", tintColor: StatusColors.IDENTIFIED, tooltip: "Identified" },
+  [Status.MONITORING]: { source: "status_icon.png", tintColor: StatusColors.MONITORING, tooltip: "Monitoring" },
+  [Status.RESOLVED]: { source: "status_icon.png", tintColor: StatusColors.RESOLVED, tooltip: "Resolved" },
 };

@@ -1,25 +1,45 @@
-import { Action, ActionPanel, Icon, LaunchType, List, environment, launchCommand, useNavigation } from "@raycast/api";
+import {
+  Action,
+  ActionPanel,
+  Icon,
+  ImageMask,
+  LaunchType,
+  List,
+  environment,
+  launchCommand,
+  useNavigation,
+} from "@raycast/api";
 import { useEffect, useState } from "react";
 import { openstatus } from "./services/OpenStatusSDK";
-import { Reports } from "./types/api";
-import { tags } from "./enum/tag";
+import { Monitor, Reports, StatusPage } from "./types/api";
+import { StatusListIcons, StatusMessage } from "./enum/tag";
 import { randomUUID } from "crypto";
 import UpdateStatusReportForm from "./update-status-report-form";
+import { getDefaultMonitorsId, getDefaultPagesId } from "./helper/getDefault";
 
 export default function UpdateStatusReports() {
   const [reports, setReports] = useState<Array<Reports> | undefined>();
+  const [allPages, setAllPages] = useState<Array<StatusPage> | undefined>();
+  const [allMonitors, setAllMonitors] = useState<Array<Monitor> | undefined>();
   const { push } = useNavigation();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(
     function () {
       async function onLoad() {
-        if (reports) return;
-
-        const statusReports = await openstatus.getAllStatusReport();
+        const [statusReports, statusPages, Monitors] = await Promise.all([
+          openstatus.getAllStatusReport(),
+          openstatus.getAllStatusPage(),
+          openstatus.getAllMonitors(),
+        ]);
+        setAllPages(statusPages);
+        setAllMonitors(Monitors);
         setReports(statusReports);
         setIsLoading(false);
       }
+
+      if (reports || allMonitors || allPages) return;
+
       onLoad();
     },
     [reports, isLoading],
@@ -27,8 +47,21 @@ export default function UpdateStatusReports() {
 
   useEffect(function () {
     if (environment.launchContext) {
-      const report = environment.launchContext.payload.report as Reports;
-      push(<UpdateStatusReportForm report={report} />);
+      const { pages, report, monitors }: { report: Reports; pages: Array<StatusPage>; monitors: Array<Monitor> } =
+        environment.launchContext.payload;
+
+      const defaultPages = getDefaultPagesId(pages, report.pages_id);
+      const defaultMonitors = getDefaultMonitorsId(monitors, report.monitors_id);
+
+      push(
+        <UpdateStatusReportForm
+          report={report}
+          defaultPages={defaultPages}
+          defaultMonitors={defaultMonitors}
+          allMonitors={monitors}
+          allPages={pages}
+        />,
+      );
     }
   }, []);
 
@@ -42,10 +75,25 @@ export default function UpdateStatusReports() {
               <List.Item
                 id={id.toString()}
                 title={title}
-                icon="../assets/OpenStatus.png"
+                icon={{
+                  value: {
+                    source: StatusListIcons[status].source,
+                    tintColor: StatusListIcons[status].tintColor,
+                  },
+                  tooltip: StatusListIcons[status].tooltip,
+                }}
                 accessories={[
                   {
-                    tag: tags[status],
+                    text: StatusMessage[status],
+                  },
+                  {
+                    icon: {
+                      source: "../assets/OpenStatus.png",
+                      mask: ImageMask.RoundedRectangle,
+                    },
+                  },
+                  {
+                    tooltip: "this is tooltip",
                   },
                 ]}
                 actions={
@@ -56,7 +104,18 @@ export default function UpdateStatusReports() {
                       onAction={async () => {
                         setIsLoading(true);
                         const report = await openstatus.getStatusReport(id);
-                        push(<UpdateStatusReportForm report={report} />);
+                        const defaultPages = getDefaultPagesId(allPages, report.pages_id);
+                        const defaultMonitors = getDefaultMonitorsId(allMonitors, report.monitors_id);
+
+                        push(
+                          <UpdateStatusReportForm
+                            report={report}
+                            defaultPages={defaultPages}
+                            defaultMonitors={defaultMonitors}
+                            allMonitors={allMonitors}
+                            allPages={allPages}
+                          />,
+                        );
                         setIsLoading(false);
                       }}
                     />

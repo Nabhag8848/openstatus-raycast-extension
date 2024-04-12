@@ -9,7 +9,11 @@ function UnresolvedReports() {
   const isLoading = reports === undefined;
 
   async function openUpdateStatusReportForm(id: number) {
-    const report = await openstatus.getStatusReport(id);
+    const [report, pages, monitors] = await Promise.all([
+      openstatus.getStatusReport(id),
+      openstatus.getAllStatusPage(),
+      openstatus.getAllMonitors(),
+    ]);
     await launchCommand({
       name: "update-status-report",
       type: LaunchType.UserInitiated,
@@ -17,6 +21,8 @@ function UnresolvedReports() {
         type: "update_report_menu_bar",
         payload: {
           report,
+          pages,
+          monitors,
         },
       },
     });
@@ -27,6 +33,7 @@ function UnresolvedReports() {
         const statusReports = await openstatus.getAllUnresolvedStatusReport();
         setReports(statusReports);
       }
+      if (reports) return;
       onLoad();
     },
     [reports],
