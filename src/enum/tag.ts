@@ -20,10 +20,10 @@ enum StatusColors {
 }
 
 export const tags: Record<Status, Tag> = {
-  [Status.INVESTIGATING]: { value: "Investigating", color: StatusColors.INVESTIGATING },
-  [Status.MONITORING]: { value: "Monitoring", color: StatusColors.MONITORING },
-  [Status.IDENTIFIED]: { value: "Identified", color: StatusColors.IDENTIFIED },
-  [Status.RESOLVED]: { value: "Resolved", color: StatusColors.RESOLVED },
+  [Status.INVESTIGATING]: { value: "〇 INVESTIGATING  .", color: StatusColors.INVESTIGATING },
+  [Status.MONITORING]: { value: "〇    MONITORING   .", color: StatusColors.MONITORING },
+  [Status.IDENTIFIED]: { value: "〇     IDENTIFIED      .", color: StatusColors.IDENTIFIED },
+  [Status.RESOLVED]: { value: "◉      RESOLVED      .", color: StatusColors.RESOLVED },
 };
 
 export const StatusIcons = {
@@ -46,11 +46,19 @@ export const StatusMessage = {
 
 export const StatusListIcons = {
   [Status.INVESTIGATING]: {
-    source: "status_icon.png",
-    tintColor: StatusColors.INVESTIGATING,
+    value: {
+      source: "status_icon.png",
+      tintColor: StatusColors.INVESTIGATING,
+    },
     tooltip: "Investigating",
   },
-  [Status.IDENTIFIED]: { source: "status_icon.png", tintColor: StatusColors.IDENTIFIED, tooltip: "Identified" },
-  [Status.MONITORING]: { source: "status_icon.png", tintColor: StatusColors.MONITORING, tooltip: "Monitoring" },
-  [Status.RESOLVED]: { source: "status_icon.png", tintColor: StatusColors.RESOLVED, tooltip: "Resolved" },
+  [Status.IDENTIFIED]: {
+    value: { source: "status_icon.png", tintColor: StatusColors.IDENTIFIED },
+    tooltip: "Identified",
+  },
+  [Status.MONITORING]: {
+    value: { source: "status_icon.png", tintColor: StatusColors.MONITORING },
+    tooltip: "Monitoring",
+  },
+  [Status.RESOLVED]: { value: { source: "status_icon.png", tintColor: StatusColors.RESOLVED }, tooltip: "Resolved" },
 };

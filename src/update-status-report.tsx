@@ -12,7 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import { openstatus } from "./services/OpenStatusSDK";
 import { Monitor, Reports, StatusPage } from "./types/api";
-import { StatusListIcons, StatusMessage } from "./enum/tag";
+import { StatusListIcons, tags } from "./enum/tag";
 import { randomUUID } from "crypto";
 import UpdateStatusReportForm from "./update-status-report-form";
 import { getDefaultMonitorsId, getDefaultPagesId } from "./helper/getDefault";
@@ -75,16 +75,10 @@ export default function UpdateStatusReports() {
               <List.Item
                 id={id.toString()}
                 title={title}
-                icon={{
-                  value: {
-                    source: StatusListIcons[status].source,
-                    tintColor: StatusListIcons[status].tintColor,
-                  },
-                  tooltip: StatusListIcons[status].tooltip,
-                }}
+                icon={StatusListIcons[status]}
                 accessories={[
                   {
-                    text: StatusMessage[status],
+                    tag: tags[status],
                   },
                   {
                     icon: {
