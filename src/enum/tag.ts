@@ -32,16 +32,20 @@ export const StatusIcons = {
   [Status.MONITORING]: { source: "status_icon_small.png", tintColor: StatusColors.MONITORING },
 };
 
+export const MonitorColors = {
+  true: "#22C55E",
+  false: "#f97316",
+};
 export const MonitorsIcons = {
-  true: { source: "status_icon.png", tintColor: "#22C55E" },
-  false: { source: "status_icon.png", tintColor: "#f97316" },
+  true: { source: "status_icon.png", tintColor: MonitorColors["true"] },
+  false: { source: "status_icon.png", tintColor: MonitorColors["false"] },
 };
 
 export const StatusMessage = {
-  [Status.INVESTIGATING]: { value: "Investigating  ", color: Color.Red },
-  [Status.MONITORING]: { value: "Monitoring    ", color: Color.Blue },
-  [Status.IDENTIFIED]: { value: "Identified     ", color: Color.Yellow },
-  [Status.RESOLVED]: { value: "Resolved     ", color: Color.Green },
+  [Status.INVESTIGATING]: { value: "〇 INVESTIGATING  .", color: Color.Red },
+  [Status.MONITORING]: { value: "〇    MONITORING   .", color: Color.Blue },
+  [Status.IDENTIFIED]: { value: "〇     IDENTIFIED      .", color: Color.Yellow },
+  [Status.RESOLVED]: { value: "◉      RESOLVED      .", color: Color.Green },
 };
 
 export const StatusListIcons = {
