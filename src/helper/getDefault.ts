@@ -17,3 +17,15 @@ export function getDefaultPagesId(allPages: Array<StatusPage> | undefined, pages
 
   return defaultPages;
 }
+
+export function getDefaultPages(allPages: Array<StatusPage> | undefined, pages_id: Array<number>) {
+  const pagesId = pages_id.map(String);
+  const defaultPages = allPages?.filter((page) => pagesId.includes(page.id.toString()));
+  return defaultPages;
+}
+
+export function getDefaultMonitors(allMonitors: Array<Monitor> | undefined, monitors_id: Array<number>) {
+  const monitorsId = monitors_id.map(String);
+  const defaultMonitors = allMonitors?.filter((monitor) => monitorsId.includes(monitor.id.toString()));
+  return defaultMonitors;
+}
