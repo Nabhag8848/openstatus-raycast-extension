@@ -1,32 +1,13 @@
-import { Icon, LaunchType, MenuBarExtra, launchCommand, open, openExtensionPreferences } from "@raycast/api";
+import { Icon, MenuBarExtra, open, openExtensionPreferences } from "@raycast/api";
 import { UnResolvedReports } from "./types/api";
 import { useEffect, useState } from "react";
 import { openstatus } from "./services/OpenStatusSDK";
-import { StatusIcons } from "./enum/tag";
+import { MenuBarSection } from "./components/MenuBarSection";
 
 function UnresolvedReports() {
   const [reports, setReports] = useState<UnResolvedReports | undefined>();
   const isLoading = reports === undefined;
 
-  async function openUpdateStatusReportForm(id: number) {
-    const [report, pages, monitors] = await Promise.all([
-      openstatus.getStatusReport(id),
-      openstatus.getAllStatusPage(),
-      openstatus.getAllMonitors(),
-    ]);
-    await launchCommand({
-      name: "update-status-report",
-      type: LaunchType.UserInitiated,
-      context: {
-        type: "update_report_menu_bar",
-        payload: {
-          report,
-          pages,
-          monitors,
-        },
-      },
-    });
-  }
   useEffect(
     function () {
       async function onLoad() {
@@ -42,49 +23,13 @@ function UnresolvedReports() {
   return (
     <MenuBarExtra icon="../assets/OpenStatus.png" tooltip="Unresolved Status Reports" isLoading={isLoading}>
       {reports && reports.investigating.length > 0 && (
-        <MenuBarExtra.Section title="Investigating">
-          {reports.investigating.map((report) => {
-            const { status, title, id } = report;
-            return (
-              <MenuBarExtra.Item
-                title={title}
-                key={id}
-                icon={StatusIcons[status]}
-                onAction={() => openUpdateStatusReportForm(id)}
-              ></MenuBarExtra.Item>
-            );
-          })}
-        </MenuBarExtra.Section>
+        <MenuBarSection reports={reports.investigating} sectionTitle="Investigating" />
       )}
       {reports && reports.identified.length > 0 && (
-        <MenuBarExtra.Section title="Identified">
-          {reports.identified.map((report) => {
-            const { status, title, id } = report;
-            return (
-              <MenuBarExtra.Item
-                title={title}
-                key={id}
-                icon={StatusIcons[status]}
-                onAction={() => openUpdateStatusReportForm(id)}
-              ></MenuBarExtra.Item>
-            );
-          })}
-        </MenuBarExtra.Section>
+        <MenuBarSection reports={reports.identified} sectionTitle="Identified" />
       )}
       {reports && reports.monitoring.length > 0 && (
-        <MenuBarExtra.Section title="Monitoring">
-          {reports.monitoring.map((report) => {
-            const { status, title, id } = report;
-            return (
-              <MenuBarExtra.Item
-                title={title}
-                key={id}
-                icon={StatusIcons[status]}
-                onAction={() => openUpdateStatusReportForm(id)}
-              ></MenuBarExtra.Item>
-            );
-          })}
-        </MenuBarExtra.Section>
+        <MenuBarSection reports={reports.monitoring} sectionTitle="Monitoring" />
       )}
       <MenuBarExtra.Section title="Utilities">
         <MenuBarExtra.Item
