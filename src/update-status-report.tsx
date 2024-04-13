@@ -17,13 +17,15 @@ import { randomUUID } from "crypto";
 import UpdateStatusReportForm from "./update-status-report-form";
 import { getDefaultMonitors, getDefaultMonitorsId, getDefaultPages, getDefaultPagesId } from "./helper/getDefault";
 import { getTimeAgoFromISO } from "./helper/getTimeAgoFromISO";
+import { StatusFilterDropdown } from "./components/StatusFilterDropdown";
 
 export default function UpdateStatusReports() {
-  const [reports, setReports] = useState<Array<Reports> | undefined>();
+  const [allReports, setAllReports] = useState<Array<Reports> | undefined>();
   const [allPages, setAllPages] = useState<Array<StatusPage> | undefined>();
   const [allMonitors, setAllMonitors] = useState<Array<Monitor> | undefined>();
   const { push } = useNavigation();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [reports, setReports] = useState<Array<Reports>>();
 
   useEffect(
     function () {
@@ -35,15 +37,15 @@ export default function UpdateStatusReports() {
         ]);
         setAllPages(statusPages);
         setAllMonitors(Monitors);
+        setAllReports(statusReports);
         setReports(statusReports);
         setIsLoading(false);
       }
 
-      if (reports || allMonitors || allPages) return;
-
+      if (allReports || allMonitors || allPages || reports) return;
       onLoad();
     },
-    [reports, isLoading],
+    [allReports, isLoading, reports],
   );
 
   useEffect(function () {
@@ -71,7 +73,8 @@ export default function UpdateStatusReports() {
       isLoading={isLoading}
       navigationTitle="Update Status Report"
       searchBarPlaceholder="Search Status Reports"
-      isShowingDetail
+      isShowingDetail={reports && reports.length > 0}
+      searchBarAccessory={<StatusFilterDropdown setReports={setReports} allReports={allReports} />}
     >
       {reports && reports.length > 0 ? (
         <List.Section title="Select Report to Update">
@@ -163,11 +166,31 @@ export default function UpdateStatusReports() {
             );
           })}
         </List.Section>
-      ) : (
+      ) : allReports && allReports.length < 0 ? (
         <List.EmptyView
           title="No Status Reports"
           icon={Icon.Book}
           description="Create Your First Status Report"
+          actions={
+            <ActionPanel>
+              <Action
+                title="Create Report"
+                icon={Icon.NewDocument}
+                onAction={async () => {
+                  await launchCommand({
+                    name: "create-status-report",
+                    type: LaunchType.UserInitiated,
+                  });
+                }}
+              />
+            </ActionPanel>
+          }
+        />
+      ) : (
+        <List.EmptyView
+          title="No Reports With Current Selected Filter Status"
+          icon={Icon.Book}
+          description="Create Status Report"
           actions={
             <ActionPanel>
               <Action
