@@ -3,7 +3,11 @@ import { Common } from "./enum/validation";
 import { Monitor, Reports, StatusPage, StatusReport } from "./types/api";
 import { Action, ActionPanel, Form, Icon, PopToRootType, Toast, showHUD, showToast } from "@raycast/api";
 import { openstatus } from "./services/OpenStatusSDK";
-import { MonitorsIcons } from "./enum/tag";
+import { StatusDropdown } from "./components/StatusDropdown";
+import { MonitorPicker } from "./components/MonitorPicker";
+import { PagePicker } from "./components/PagePicker";
+import { isFormFilled } from "./helper/isFormFilled";
+import { validateRequiredField } from "./helper/validateRequiredField";
 
 function UpdateStatusReportForm({
   report,
@@ -23,50 +27,11 @@ function UpdateStatusReportForm({
   const { id, status, title, message, date } = report;
 
   function isFormComplete(values: StatusReport) {
-    let result: boolean = true;
-    const { title, message } = values;
-
-    if (title.length === 0) {
-      setTitleError(Common.FORM_VALIDATION);
-      result = false;
-    }
-
-    if (message.length === 0) {
-      setMessageError(Common.FORM_VALIDATION);
-      result = false;
-    }
-
-    return result;
+    return isFormFilled(values, setTitleError, setMessageError);
   }
 
   function validate(event) {
-    const { value, id } = event.target;
-
-    if (value && value.length > 0) {
-      switch (id) {
-        case "title": {
-          setTitleError(undefined);
-          break;
-        }
-        case "message": {
-          setMessageError(undefined);
-          break;
-        }
-      }
-
-      return;
-    }
-
-    switch (id) {
-      case "title": {
-        setTitleError(Common.FORM_VALIDATION);
-        break;
-      }
-      case "message": {
-        setMessageError(Common.FORM_VALIDATION);
-        break;
-      }
-    }
+    validateRequiredField(event, setTitleError, setMessageError);
   }
 
   async function onSubmit(values: StatusReport) {
@@ -117,23 +82,9 @@ function UpdateStatusReportForm({
           }}
           onBlur={validate}
           autoFocus
-        ></Form.TextField>
-        <Form.Dropdown id="status" title="Status" placeholder="Select Current Status" defaultValue={status}>
-          <Form.Dropdown.Item
-            title="Investigating"
-            value="investigating"
-            icon={Icon.MagnifyingGlass}
-          ></Form.Dropdown.Item>
-          <Form.Dropdown.Item title="Identified" value="identified" icon={Icon.Fingerprint}></Form.Dropdown.Item>
-          <Form.Dropdown.Item title="Monitoring" value="monitoring" icon={Icon.Heartbeat}></Form.Dropdown.Item>
-          <Form.Dropdown.Item title="Resolved" value="resolved" icon={Icon.Check}></Form.Dropdown.Item>
-        </Form.Dropdown>
-        <Form.DatePicker
-          id="date"
-          title="Date"
-          defaultValue={new Date(date as string)}
-          max={new Date()}
-        ></Form.DatePicker>
+        />
+        <StatusDropdown value={status} />
+        <Form.DatePicker id="date" title="Date" defaultValue={new Date(date as string)} max={new Date()} />
         <Form.TextArea
           id="message"
           title="Message"
@@ -146,32 +97,11 @@ function UpdateStatusReportForm({
           }}
           onBlur={validate}
           defaultValue={message}
-        ></Form.TextArea>
+        />
         <Form.Separator />
-        <Form.TagPicker id="pages_id" title="Pages" placeholder="Select Pages" defaultValue={defaultPages}>
-          {allPages &&
-            allPages.map((page) => {
-              const { id, title } = page;
-              return <Form.TagPicker.Item value={id.toString()} title={title} key={id} icon={Icon.Window} />;
-            })}
-        </Form.TagPicker>
-        <Form.Description text="Select the pages that you want to refer the incident to" />
+        <PagePicker allPages={allPages} value={defaultPages} />
         <Form.Separator />
-        <Form.TagPicker id="monitors_id" title="Monitors" placeholder="Select Monitors" defaultValue={defaultMonitors}>
-          {allMonitors &&
-            allMonitors.map((monitor) => {
-              const { id, name, active } = monitor;
-              return (
-                <Form.TagPicker.Item
-                  value={id.toString()}
-                  title={name}
-                  key={id}
-                  icon={MonitorsIcons[active ? "true" : "false"]}
-                />
-              );
-            })}
-        </Form.TagPicker>
-        <Form.Description text="Select the monitors that you want to refer the incident to" />
+        <MonitorPicker allMonitors={allMonitors} value={defaultMonitors} />
       </Form>
     </Fragment>
   );
