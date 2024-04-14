@@ -1,7 +1,7 @@
 import { Action, ActionPanel, Icon, List } from "@raycast/api";
 import { Reports } from "../types/api";
 
-export function NoFilteredReports({
+export default function NoFilteredReports({
   allReports,
   setReports,
 }: {

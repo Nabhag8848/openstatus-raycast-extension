@@ -1,9 +1,10 @@
 import { Form } from "@raycast/api";
 import { Fragment } from "react";
+
 import { MonitorsIcons } from "../enum/tag";
 import { Monitor } from "../types/api";
 
-export function MonitorPicker({ allMonitors, value }: { allMonitors?: Array<Monitor>; value?: string[] }) {
+export default function MonitorPicker({ allMonitors, value }: { allMonitors?: Array<Monitor>; value?: string[] }) {
   return (
     <Fragment>
       <Form.TagPicker id="monitors_id" title="Monitors" placeholder="Select Monitors" defaultValue={value}>

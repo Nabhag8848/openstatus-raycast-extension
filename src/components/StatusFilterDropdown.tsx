@@ -1,8 +1,9 @@
 import { List } from "@raycast/api";
-import { Reports } from "../types/api";
 import { randomUUID } from "crypto";
 
-export function StatusFilterDropdown({
+import { Reports } from "../types/api";
+
+export default function StatusFilterDropdown({
   allReports,
   setReports,
 }: {

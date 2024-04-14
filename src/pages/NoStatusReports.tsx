@@ -1,6 +1,6 @@
 import { Action, ActionPanel, Icon, LaunchType, List, launchCommand } from "@raycast/api";
 
-export function NoStatusReports() {
+export default function NoStatusReports() {
   return (
     <List.EmptyView
       title="No Status Reports"

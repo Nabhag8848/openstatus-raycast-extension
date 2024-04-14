@@ -1,8 +1,10 @@
 import { Icon, MenuBarExtra, open, openExtensionPreferences } from "@raycast/api";
-import { UnResolvedReports } from "./types/api";
 import { useEffect, useState } from "react";
-import { openstatus } from "./services/OpenStatusSDK";
-import { MenuBarSection } from "./components/MenuBarSection";
+
+import openstatus from "./services/OpenStatusSDK";
+import { UnResolvedReports } from "./types/api";
+
+import { MenuBarSection } from "./components";
 
 function UnresolvedReports() {
   const [reports, setReports] = useState<UnResolvedReports | undefined>();

@@ -1,8 +1,8 @@
-import { getDefaultMonitorsId, getDefaultPagesId } from "../helper/getDefault";
+import { getDefaultMonitorsId, getDefaultPagesId } from "../helper";
 import { Monitor, Reports, StatusPage } from "../types/api";
 import UpdateStatusReportForm from "../update-status-report-form";
 
-export function OpenUpdateReportForm({
+export default function OpenUpdateReportForm({
   report,
   allPages,
   allMonitors,

@@ -1,10 +1,9 @@
 import { Color, List } from "@raycast/api";
-import { getTimeAgoFromISO } from "../helper/getTimeAgoFromISO";
 import { MonitorColors, StatusMessage } from "../enum/tag";
-import { getDefaultMonitors, getDefaultPages } from "../helper/getDefault";
+import { getDefaultMonitors, getDefaultPages, getTimeAgoFromISO } from "../helper";
 import { Monitor, Reports, StatusPage } from "../types/api";
 
-export function ReportDetails({
+export default function ReportDetails({
   report,
   allPages,
   allMonitors,

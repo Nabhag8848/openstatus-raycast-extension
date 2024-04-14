@@ -1,13 +1,11 @@
-import { Fragment, useState } from "react";
-import { Common } from "./enum/validation";
-import { Monitor, Reports, StatusPage, StatusReport } from "./types/api";
 import { Action, ActionPanel, Form, Icon, PopToRootType, Toast, showHUD, showToast } from "@raycast/api";
-import { openstatus } from "./services/OpenStatusSDK";
-import { StatusDropdown } from "./components/StatusDropdown";
-import { MonitorPicker } from "./components/MonitorPicker";
-import { PagePicker } from "./components/PagePicker";
-import { isFormFilled } from "./helper/isFormFilled";
-import { validateRequiredField } from "./helper/validateRequiredField";
+import { Fragment, useState } from "react";
+
+import { Monitor, Reports, StatusPage, StatusReport } from "./types/api";
+import openstatus from "./services/OpenStatusSDK";
+
+import { isFormFilled, validateRequiredField } from "./helper";
+import { StatusDropdown, MonitorPicker, PagePicker, MessageBox, TitleInput, DatePicker } from "./components";
 
 function UpdateStatusReportForm({
   report,
@@ -69,35 +67,10 @@ function UpdateStatusReportForm({
           </ActionPanel>
         }
       >
-        <Form.TextField
-          id="title"
-          title="Title"
-          placeholder="Enter Title of your Outage..."
-          defaultValue={title}
-          error={titleError}
-          onChange={(value) => {
-            if (value.length >= 0) {
-              setTitleError(undefined);
-            }
-          }}
-          onBlur={validate}
-          autoFocus
-        />
+        <TitleInput values={{ value: title, titleError, setTitleError, validate }} />
         <StatusDropdown value={status} />
-        <Form.DatePicker id="date" title="Date" defaultValue={new Date(date as string)} max={new Date()} />
-        <Form.TextArea
-          id="message"
-          title="Message"
-          placeholder="We are encountering..."
-          error={messageError}
-          onChange={(value) => {
-            if (value.length) {
-              setMessageError(undefined);
-            }
-          }}
-          onBlur={validate}
-          defaultValue={message}
-        />
+        <DatePicker date={new Date(date as string)} />
+        <MessageBox values={{ messageError, setMessageError, validate, value: message }} />
         <Form.Separator />
         <PagePicker allPages={allPages} value={defaultPages} />
         <Form.Separator />

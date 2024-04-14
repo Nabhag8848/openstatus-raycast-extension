@@ -193,4 +193,5 @@ class OpenStatusSDK {
   }
 }
 
-export const openstatus = new OpenStatusSDK();
+const openstatus = new OpenStatusSDK();
+export default openstatus;

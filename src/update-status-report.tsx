@@ -2,14 +2,11 @@ import { Action, ActionPanel, Icon, List, environment, useNavigation } from "@ra
 import { useEffect, useState } from "react";
 import { randomUUID } from "crypto";
 
-import { StatusFilterDropdown } from "./components/StatusFilterDropdown";
-import { NoFilteredReports } from "./pages/NoFilteredReports";
-import { NoStatusReports } from "./pages/NoStatusReports";
-import { ReportDetails } from "./pages/ReportDetails";
-import { OpenUpdateReportForm } from "./pages/UpdateReportForm";
+import { StatusFilterDropdown } from "./components";
+import { NoFilteredReports, NoStatusReports, ReportDetails, OpenUpdateReportForm } from "./pages";
 
 import { Monitor, Reports, StatusPage } from "./types/api";
-import { openstatus } from "./services/OpenStatusSDK";
+import openstatus from "./services/OpenStatusSDK";
 import { StatusListIcons } from "./enum/tag";
 
 export default function UpdateStatusReports() {

@@ -1,8 +1,9 @@
 import { Form, Icon } from "@raycast/api";
 import { Fragment } from "react";
+
 import { StatusPage } from "../types/api";
 
-export function PagePicker({ allPages, value }: { allPages?: Array<StatusPage>; value?: string[] }) {
+export default function PagePicker({ allPages, value }: { allPages?: Array<StatusPage>; value?: string[] }) {
   return (
     <Fragment>
       <Form.TagPicker id="pages_id" title="Pages" placeholder="Select Pages" defaultValue={value}>

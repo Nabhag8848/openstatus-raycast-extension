@@ -1,9 +1,10 @@
 import { LaunchType, MenuBarExtra, launchCommand } from "@raycast/api";
+
 import { StatusIcons } from "../enum/tag";
 import { NonResolvedReports } from "../types/api";
-import { openstatus } from "../services/OpenStatusSDK";
+import openstatus from "../services/OpenStatusSDK";
 
-export function MenuBarSection({
+export default function MenuBarSection({
   reports,
   sectionTitle,
 }: {
