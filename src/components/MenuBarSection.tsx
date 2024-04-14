@@ -3,6 +3,7 @@ import { LaunchType, MenuBarExtra, launchCommand } from "@raycast/api";
 import { StatusIcons } from "../enum/tag";
 import { NonResolvedReports } from "../types/api";
 import openstatus from "../services/OpenStatusSDK";
+import { getTimeAgoFromISO } from "../helper";
 
 export default function MenuBarSection({
   reports,
@@ -35,13 +36,16 @@ export default function MenuBarSection({
   return (
     <MenuBarExtra.Section title={sectionTitle}>
       {reports.map((report) => {
-        const { status, title, id } = report;
+        const { status, title, id, date } = report;
+
         return (
           <MenuBarExtra.Item
             title={title}
             key={id}
             icon={StatusIcons[status]}
             onAction={() => openUpdateStatusReportForm(id)}
+            subtitle={getTimeAgoFromISO(date, true)}
+            tooltip={title}
           />
         );
       })}

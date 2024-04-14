@@ -36,6 +36,7 @@ export type NonResolvedReports = {
   id: number;
   title: string;
   status: "investigating" | "identified" | "monitoring";
+  date: string;
 };
 
 export type UnResolvedReports = {
