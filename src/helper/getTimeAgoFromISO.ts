@@ -1,4 +1,4 @@
-export function getTimeAgoFromISO(isoDate: string): string {
+export function getTimeAgoFromISO(isoDate: string, isMenu: boolean = false): string {
   const date = new Date(isoDate);
   const now = new Date();
   const secondsAgo = Math.round((now.getTime() - date.getTime()) / 1000);
@@ -7,19 +7,19 @@ export function getTimeAgoFromISO(isoDate: string): string {
   const daysAgo = Math.round(hoursAgo / 24);
 
   if (secondsAgo < 60) {
-    return "Just now";
+    return "just now";
   }
   if (minutesAgo < 60) {
-    return `${minutesAgo} minutes ago`;
+    return isMenu ? `${minutesAgo}m ago` : `${minutesAgo} mins ago`;
   }
   if (hoursAgo < 24) {
-    return `${hoursAgo} hours ago`;
+    return isMenu ? `${hoursAgo}h ago` : `${hoursAgo} hours ago`;
   }
   if (daysAgo === 1) {
     return "yesterday";
   }
   if (daysAgo < 7) {
-    return `${daysAgo} days ago`;
+    return isMenu ? `${daysAgo}d ago` : `${daysAgo} days ago`;
   }
   if (daysAgo === 7) {
     return "1 week ago";
@@ -27,8 +27,8 @@ export function getTimeAgoFromISO(isoDate: string): string {
 
   // for dates more than 7 days ago, give a precise date
   const fullFormatter = new Intl.DateTimeFormat("en-US", {
-    year: "numeric",
-    month: "long",
+    year: "2-digit",
+    month: "short",
     day: "numeric",
   });
 
