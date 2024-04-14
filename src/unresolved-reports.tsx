@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import openstatus from "./services/OpenStatusSDK";
 import { UnResolvedReports } from "./types/api";
+import { Api, MenuBarIcon, Shortcuts } from "./enum/api";
 
 import { MenuBarSection } from "./components";
 
@@ -23,7 +24,7 @@ function UnresolvedReports() {
   );
 
   return (
-    <MenuBarExtra icon="../assets/OpenStatus.png" tooltip="Unresolved Status Reports" isLoading={isLoading}>
+    <MenuBarExtra icon={MenuBarIcon} tooltip="Unresolved Status Reports" isLoading={isLoading}>
       {reports && reports.investigating.length > 0 && (
         <MenuBarSection reports={reports.investigating} sectionTitle="Investigating" />
       )}
@@ -37,13 +38,13 @@ function UnresolvedReports() {
         <MenuBarExtra.Item
           title="Dashboard"
           icon={Icon.AppWindow}
-          shortcut={{ modifiers: ["cmd", "shift"], key: "d" }}
-          onAction={() => open("https://www.openstatus.dev/app/")}
+          shortcut={Shortcuts.dashboard}
+          onAction={() => open(Api.DASHBOARD_URL)}
         />
         <MenuBarExtra.Item
           title="Preferences"
           icon={Icon.Keyboard}
-          shortcut={{ modifiers: ["cmd"], key: "," }}
+          shortcut={Shortcuts.preferences}
           onAction={async () => await openExtensionPreferences()}
         />
       </MenuBarExtra.Section>

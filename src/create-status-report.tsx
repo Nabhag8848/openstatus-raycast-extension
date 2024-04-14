@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import openstatus from "./services/OpenStatusSDK";
 import { Monitor, StatusPage, StatusReport } from "./types/api";
+import { FailureToast } from "./enum/api";
 
 import { isFormFilled, validateRequiredField } from "./helper";
 import { StatusDropdown, MonitorPicker, PagePicker, MessageBox, TitleInput, DatePicker } from "./components";
@@ -58,11 +59,7 @@ function CreateStatusReport() {
       return;
     }
 
-    await showToast({
-      style: Toast.Style.Failure,
-      title: "Something Went Wrong",
-      message: "Please try again. If the issue persists, please contact us",
-    });
+    await showToast(FailureToast);
   }
 
   return (

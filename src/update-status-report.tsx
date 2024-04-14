@@ -18,6 +18,7 @@ export default function UpdateStatusReports() {
   const [reports, setReports] = useState<Array<Reports>>();
   const isEmptyView = allReports && allReports.length < 0;
   const isNonEmptyView = reports && reports.length > 0;
+  const [filterBy, setFilterBy] = useState<string>("all-status-reports");
 
   useEffect(
     function () {
@@ -59,7 +60,7 @@ export default function UpdateStatusReports() {
       navigationTitle="Update Status Report"
       searchBarPlaceholder="Search Status Reports"
       isShowingDetail={isNonEmptyView}
-      searchBarAccessory={<StatusFilterDropdown setReports={setReports} allReports={allReports} />}
+      searchBarAccessory={<StatusFilterDropdown values={{ setReports, allReports, setFilterBy, filterBy }} />}
     >
       {isNonEmptyView ? (
         <List.Section title="Select Report to Update">
@@ -94,7 +95,7 @@ export default function UpdateStatusReports() {
       ) : isEmptyView ? (
         <NoStatusReports />
       ) : (
-        <NoFilteredReports setReports={setReports} allReports={allReports} />
+        <NoFilteredReports values={{ setReports, allReports, filterBy, setFilterBy }} />
       )}
     </List>
   );

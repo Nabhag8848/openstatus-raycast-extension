@@ -30,10 +30,12 @@ export const StatusIcons = {
   [Status.INVESTIGATING]: { source: "status_icon_small.png", tintColor: StatusColors.INVESTIGATING },
   [Status.IDENTIFIED]: { source: "status_icon_small.png", tintColor: StatusColors.IDENTIFIED },
   [Status.MONITORING]: { source: "status_icon_small.png", tintColor: StatusColors.MONITORING },
+  [Status.RESOLVED]: { source: "status_icon_small.png", tintColor: StatusColors.RESOLVED },
+  "all-status-reports": { source: "status_icon_small.png", tintColor: Color.PrimaryText },
 };
 
 export const MonitorColors = {
-  true: "#22C55E",
+  true: Color.Green,
   false: "#f97316",
 };
 export const MonitorsIcons = {
@@ -41,11 +43,11 @@ export const MonitorsIcons = {
   false: { source: "status_icon.png", tintColor: MonitorColors["false"] },
 };
 
-export const StatusMessage = {
-  [Status.INVESTIGATING]: { value: "〇 INVESTIGATING  .", color: Color.Red },
-  [Status.MONITORING]: { value: "〇    MONITORING   .", color: Color.Blue },
-  [Status.IDENTIFIED]: { value: "〇     IDENTIFIED      .", color: Color.Yellow },
-  [Status.RESOLVED]: { value: "◉      RESOLVED      .", color: Color.Green },
+export const StatusTags = {
+  [Status.INVESTIGATING]: { value: "〇 INVESTIGATING  .", color: StatusColors.INVESTIGATING },
+  [Status.MONITORING]: { value: "〇    MONITORING   .", color: StatusColors.MONITORING },
+  [Status.IDENTIFIED]: { value: "〇     IDENTIFIED      .", color: StatusColors.IDENTIFIED },
+  [Status.RESOLVED]: { value: "◉      RESOLVED      .", color: StatusColors.RESOLVED },
 };
 
 export const StatusListIcons = {
@@ -66,3 +68,32 @@ export const StatusListIcons = {
   },
   [Status.RESOLVED]: { value: { source: "status_icon.png", tintColor: StatusColors.RESOLVED }, tooltip: "Resolved" },
 };
+
+export const StatusDefaultOption = {
+  title: "All Status Reports",
+  value: "all-status-reports",
+  icon: StatusIcons["all-status-reports"],
+};
+
+export const StatusOption = [
+  {
+    title: "Investigating",
+    value: "investigating",
+    icon: StatusIcons[Status.INVESTIGATING],
+  },
+  {
+    title: "Monitoring",
+    value: "monitoring",
+    icon: StatusIcons[Status.MONITORING],
+  },
+  {
+    title: "Identified",
+    value: "identified",
+    icon: StatusIcons[Status.IDENTIFIED],
+  },
+  {
+    title: "Resolved",
+    value: "resolved",
+    icon: StatusIcons[Status.RESOLVED],
+  },
+];

@@ -3,6 +3,7 @@ import { Form } from "@raycast/api";
 type TitleInputProps = {
   titleError?: string;
   setTitleError: React.Dispatch<React.SetStateAction<string | undefined>>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   validate: (event: any) => void;
   value?: string;
 };
