@@ -27,11 +27,19 @@ function UnresolvedReports() {
   );
 
   return (
-    <MenuBarExtra icon={MenuBarIcon} tooltip="Unresolved Status Reports" isLoading={isLoading} title="OpenStatus">
-      <MenuBarExtra.Section title="Unresolved Reports">
-        {InReports && <MenuBarItem reports={reports.investigating} />}
-        {IdReports && <MenuBarItem reports={reports.identified} />}
-        {MoReports && <MenuBarItem reports={reports.monitoring} />}
+    <MenuBarExtra icon={MenuBarIcon} tooltip="Unresolved Status Reports" isLoading={isLoading}>
+      <MenuBarExtra.Section title="Status Reports">
+        <MenuBarExtra.Submenu title="Investigating" icon={Icon.MagnifyingGlass}>
+          {InReports && <MenuBarItem reports={reports.investigating} />}
+        </MenuBarExtra.Submenu>
+
+        <MenuBarExtra.Submenu title="Identified" icon={Icon.Fingerprint}>
+          {IdReports && <MenuBarItem reports={reports.identified} />}
+        </MenuBarExtra.Submenu>
+
+        <MenuBarExtra.Submenu title="Monitoring" icon={Icon.Heartbeat}>
+          {MoReports && <MenuBarItem reports={reports.monitoring} />}
+        </MenuBarExtra.Submenu>
       </MenuBarExtra.Section>
       <MenuBarExtra.Section title="Utilities">
         <MenuBarExtra.Item
