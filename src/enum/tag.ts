@@ -26,12 +26,14 @@ export const tags: Record<Status, Tag> = {
   [Status.RESOLVED]: { value: "◉      RESOLVED      .", color: StatusColors.RESOLVED },
 };
 
+export const DefaultOptionValue = "all-status-reports";
+
 export const StatusIcons = {
   [Status.INVESTIGATING]: { source: "status_icon_small.png", tintColor: StatusColors.INVESTIGATING },
   [Status.IDENTIFIED]: { source: "status_icon_small.png", tintColor: StatusColors.IDENTIFIED },
   [Status.MONITORING]: { source: "status_icon_small.png", tintColor: StatusColors.MONITORING },
   [Status.RESOLVED]: { source: "status_icon_small.png", tintColor: StatusColors.RESOLVED },
-  "all-status-reports": { source: "status_icon_small.png", tintColor: Color.PrimaryText },
+  [DefaultOptionValue]: { source: "status_icon_small.png", tintColor: Color.PrimaryText },
 };
 
 export const MonitorColors = {
@@ -71,8 +73,8 @@ export const StatusListIcons = {
 
 export const StatusDefaultOption = {
   title: "All Status Reports",
-  value: "all-status-reports",
-  icon: StatusIcons["all-status-reports"],
+  value: DefaultOptionValue,
+  icon: StatusIcons[DefaultOptionValue],
 };
 
 export const StatusOption = [
