@@ -1,17 +1,12 @@
 import { LaunchType, MenuBarExtra, launchCommand } from "@raycast/api";
+import { Fragment } from "react";
 
 import { StatusIcons } from "../enum/tag";
 import { NonResolvedReports } from "../types/api";
 import openstatus from "../services/OpenStatusSDK";
 import { getTimeAgoFromISO } from "../helper";
 
-export default function MenuBarSection({
-  reports,
-  sectionTitle,
-}: {
-  reports: Array<NonResolvedReports>;
-  sectionTitle: string;
-}) {
+export default function MenuBarItem({ reports }: { reports: Array<NonResolvedReports> }) {
   async function openUpdateStatusReportForm(id: number) {
     const [report, allPages, allMonitors] = await Promise.all([
       openstatus.getStatusReport(id),
@@ -34,7 +29,7 @@ export default function MenuBarSection({
   }
 
   return (
-    <MenuBarExtra.Section title={sectionTitle}>
+    <Fragment>
       {reports.map((report) => {
         const { status, title, id, date } = report;
 
@@ -49,6 +44,6 @@ export default function MenuBarSection({
           />
         );
       })}
-    </MenuBarExtra.Section>
+    </Fragment>
   );
 }

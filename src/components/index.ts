@@ -1,4 +1,4 @@
-import MenuBarSection from "./MenuBarSection";
+import MenuBarItem from "./MenuBarItem";
 import MessageBox from "./MessageBox";
 import MonitorPicker from "./MonitorPicker";
 import PagePicker from "./PagePicker";
@@ -8,7 +8,7 @@ import TitleInput from "./TitleInput";
 import DatePicker from "./DatePicker";
 
 export {
-  MenuBarSection,
+  MenuBarItem,
   MessageBox,
   MonitorPicker,
   PagePicker,
