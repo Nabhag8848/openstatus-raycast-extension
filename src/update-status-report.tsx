@@ -7,7 +7,8 @@ import { NoFilteredReports, NoStatusReports, ReportDetails, OpenUpdateReportForm
 
 import { Monitor, Reports, StatusPage } from "./types/api";
 import openstatus from "./services/OpenStatusSDK";
-import { StatusListIcons } from "./enum/tag";
+import { DefaultOptionValue, StatusListIcons } from "./enum/tag";
+import { filterByQuery, filterByStatus } from "./helper";
 
 export default function UpdateStatusReports() {
   const [allReports, setAllReports] = useState<Array<Reports> | undefined>();
@@ -16,10 +17,10 @@ export default function UpdateStatusReports() {
   const { push } = useNavigation();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [reports, setReports] = useState<Array<Reports>>();
-  const isEmptyView = allReports && allReports.length < 0;
+  const isEmptyView = allReports && allReports.length < 1;
   const isNonEmptyView = reports && reports.length > 0;
-  const [filterBy, setFilterBy] = useState<string>("all-status-reports");
-
+  const [filterBy, setFilterBy] = useState<string>(DefaultOptionValue);
+  const [searchQuery, setSearchQuery] = useState<string>("");
   useEffect(
     function () {
       async function onLoad() {
@@ -54,13 +55,28 @@ export default function UpdateStatusReports() {
     }
   }, []);
 
+  function handleSearchQuery(query: string) {
+    const reportsWithQuery = filterByQuery({ allReports, query });
+    const expectedReports = filterByStatus({ filterBy, reportsWithQuery });
+
+    setReports(expectedReports);
+    setSearchQuery(query);
+  }
+
   return (
     <List
       isLoading={isLoading}
       navigationTitle="Update Status Report"
       searchBarPlaceholder="Search Status Reports"
       isShowingDetail={isNonEmptyView}
-      searchBarAccessory={<StatusFilterDropdown values={{ setReports, allReports, setFilterBy, filterBy }} />}
+      searchBarAccessory={
+        !isEmptyView && !isLoading ? (
+          <StatusFilterDropdown values={{ setReports, allReports, setFilterBy, filterBy, searchQuery }} />
+        ) : null
+      }
+      searchText={searchQuery}
+      onSearchTextChange={handleSearchQuery}
+      throttle
     >
       {isNonEmptyView ? (
         <List.Section title="Select Report to Update">
@@ -95,7 +111,7 @@ export default function UpdateStatusReports() {
       ) : isEmptyView ? (
         <NoStatusReports />
       ) : (
-        <NoFilteredReports values={{ setReports, allReports, filterBy, setFilterBy }} />
+        <NoFilteredReports values={{ setReports, allReports, filterBy, setFilterBy, setSearchQuery, searchQuery }} />
       )}
     </List>
   );

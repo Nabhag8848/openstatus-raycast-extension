@@ -15,6 +15,7 @@ export const FailureToast = {
 export const Shortcuts: { [key: string]: Keyboard.Shortcut } = {
   dashboard: { modifiers: ["cmd", "shift"], key: "d" },
   preferences: { modifiers: ["cmd"], key: "," },
+  status: { modifiers: ["cmd"], key: "s" },
 };
 
 export const MenuBarIcon = {
