@@ -20,7 +20,7 @@ export default function NoFilteredReports({ values }: { values: NoFilteredReport
     <List.EmptyView
       title={`No Reports Matching Filters`}
       icon={Icon.Megaphone}
-      description="Press Enter to Change Filters Back to Default"
+      description="Press Cmd + Enter to Change Filters back to Default"
       actions={
         <ActionPanel>
           <Action
