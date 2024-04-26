@@ -1,10 +1,16 @@
-# OpenStatus Raycast Integration
+# 🔥 OpenStatus Raycast Integration
 
 OpenStatus is OpenSouce (more than 3x Github Trending)) Monitoring Tool for your Services. With this Raycast Integration, you'll be able to experience OpenStatus as if it's a native. Keep an eye on current status updates, effortlessly create detailed status reports, and update them with lightning speed. Get ready to streamline your workflow like never before and experience the power of OpenStatus in a whole new way with Raycast!
 
-<h2 align="center">Blazingly Fast Monitor with Status Reports Management</h2>
+<h1 align="center">Blazingly Fast Monitor 📈 with Status Reports Management</h1>
 
-<img width="1093" alt="Pic 1" src="https://github.com/Nabhag8848/openstatus-raycast-extension/assets/65061890/817ce051-0e50-4739-958e-20a716f5d7a3">
+## 🎥 Create Status Report Demo (Click Picture)
+
+<a href="https://drive.google.com/file/d/1aVmUs3ohkN9aSppb3mCd7t8fe0SvLhIv/view" title="Create Status Report Demo"><img src="https://github.com/Nabhag8848/openstatus-raycast-extension/assets/65061890/817ce051-0e50-4739-958e-20a716f5d7a3" alt="Demo1" /></a>
+
+## 🎥 Update Status Report Demo (Click Picture)
+
+<a href="https://drive.google.com/file/d/1VKUGkmRrzgw4hOSyBXM_na_0Z6Q64iJU/view" title="Update Status Report Demo"><img src="https://github.com/Nabhag8848/openstatus-raycast-extension/assets/65061890/99069909-2233-4af9-999d-941625507911" alt="Demo2" /></a>
 
 ## Command Descriptions
 ### <i>Create Status Report</i>
@@ -15,7 +21,7 @@ OpenStatus is OpenSouce (more than 3x Github Trending)) Monitoring Tool for your
 `Menu Bar Reports` is the command that makes the Menubar possible which can let you navigate and update the selective reports, say good bye to context switching.
 
 ## Getting Started
-- Get your AccessToken from (https://openstatus.dev)[https://openstatus.dev] If you have a Access token, navigate to Raycast Command settings for the extension by using `Cmd + ,` and set the Access token there
+Get your AccessToken from (https://openstatus.dev)[https://openstatus.dev] If you have a Access token, navigate to Raycast Command settings for the extension by using `Cmd + ,` and set the Access token there
 
 <img width="1093" alt="Pic0" src="https://github.com/Nabhag8848/openstatus-raycast-extension/assets/65061890/6e3f0a5b-de30-46c2-ba3e-7c2cd0a228e5">
 
