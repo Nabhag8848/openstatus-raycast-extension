@@ -7,7 +7,7 @@ OpenStatus is OpenSouce (more than 3x Github Trending)) Monitoring Tool for your
 </span>
 </p>
 
-# 🚀 $\{\textcolor{#fd7e14}{\textbf{Blazingly\ Fast\ Monitor\ with\ Status\ Reports\ Management}}}$
+## $\{\textcolor{#fd7e14}{\textbf{🚀 Blazingly\ Fast\ Monitor\ with\ Status\ Reports\ Management}}}$
 
 ## 🎥 Create Status Report Demo (Click Picture)
 
