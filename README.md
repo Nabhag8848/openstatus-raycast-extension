@@ -32,13 +32,47 @@ Want to create a status report? Just fill what you need in your report—like th
  </tr>
 </table>
 
+### Update Status Report & Menu Bar Reports
+Ready to fine-tune your status report? Just use the command 'update status report', and you'll see all your reports listed. You can filter them by status if needed. Choose the report you want to modify—whether it's changing the title, message, pages, monitors, status, or date—and make your updates. If you haven't created any reports yet, no problem! We'll help you create your very first one. After you're done, you can easily view your updated report in the menu bar. simplifying your report management!"
+
 <img width="1093" alt="Pic2" src="https://github.com/Nabhag8848/openstatus-raycast-extension/assets/65061890/39a15aab-85b0-4ff2-88af-5982a0047e44">
-<img width="684" alt="Pic11" src="https://github.com/Nabhag8848/openstatus-raycast-extension/assets/65061890/2bf44ca8-2d65-432c-8cbf-78bfd8c62b72">
-<img width="907" alt="Pic10" src="https://github.com/Nabhag8848/openstatus-raycast-extension/assets/65061890/b17afc8e-9f37-4ea1-957b-0baab3f92e8b">
-<img width="917" alt="Pic9" src="https://github.com/Nabhag8848/openstatus-raycast-extension/assets/65061890/e90d4756-bd29-4169-88b0-7a0856d13900">
-<img width="917" alt="Pic8" src="https://github.com/Nabhag8848/openstatus-raycast-extension/assets/65061890/8825fdc9-1f74-4344-a1a9-9d21ebb3bea3">
-<img width="917" alt="Pic7" src="https://github.com/Nabhag8848/openstatus-raycast-extension/assets/65061890/5a7cce49-5ce1-4212-be30-0b651220302d">
-<img width="917" alt="Pic6" src="https://github.com/Nabhag8848/openstatus-raycast-extension/assets/65061890/99069909-2233-4af9-999d-941625507911">
-<img width="917" alt="Pic5" src="https://github.com/Nabhag8848/openstatus-raycast-extension/assets/65061890/508a3141-88e4-436f-9d3c-80a7cabbecae">
+<table border="0">
+ <tr>
+   <td>
+     <img width="917" alt="Pic5" src="https://github.com/Nabhag8848/openstatus-raycast-extension/assets/65061890/508a3141-88e4-436f-9d3c-80a7cabbecae">
+   </td>
+   <td>
+     <img width="917" alt="Pic6" src="https://github.com/Nabhag8848/openstatus-raycast-extension/assets/65061890/99069909-2233-4af9-999d-941625507911">
+   </td>
+ </tr>
+  <tr>
+   <td>
+     <img width="917" alt="Pic7" src="https://github.com/Nabhag8848/openstatus-raycast-extension/assets/65061890/5a7cce49-5ce1-4212-be30-0b651220302d">
+   </td>
+   <td>
+    <img width="917" alt="Pic8" src="https://github.com/Nabhag8848/openstatus-raycast-extension/assets/65061890/8825fdc9-1f74-4344-a1a9-9d21ebb3bea3">
+   </td>
+ </tr>
+</table>
+
+   <img  alt="Pic9" src="https://github.com/Nabhag8848/openstatus-raycast-extension/assets/65061890/e90d4756-bd29-4169-88b0-7a0856d13900">
+   
+<table>
+ <tr>
+  <td>
+    <img width="907" alt="Pic10" src="https://github.com/Nabhag8848/openstatus-raycast-extension/assets/65061890/b17afc8e-9f37-4ea1-957b-0baab3f92e8b">  
+  </td>
+  <td>
+   <img width="684" alt="Pic11" src="https://github.com/Nabhag8848/openstatus-raycast-extension/assets/65061890/2bf44ca8-2d65-432c-8cbf-78bfd8c62b72">
+  </td>
+</tr>
+</table>
+
+
+
+
+
+
+
 
 
