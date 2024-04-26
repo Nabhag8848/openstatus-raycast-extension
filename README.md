@@ -1,8 +1,13 @@
-# 🔥 OpenStatus Raycast Integration
+<h1 align="left"> 🔥 OpenStatus Raycast Integration </h1>
 
+
+<p>
+ <span>
 OpenStatus is OpenSouce (more than 3x Github Trending)) Monitoring Tool for your Services. With this Raycast Integration, you'll be able to experience OpenStatus as if it's a native. Keep an eye on current status updates, effortlessly create detailed status reports, and update them with lightning speed. Get ready to streamline your workflow like never before and experience the power of OpenStatus in a whole new way with Raycast!
+</span>
+</p>
 
-<h1 align="center">Blazingly Fast Monitor 📈 with Status Reports Management</h1>
+# 🚀 $\{\textcolor{#fd7e14}{\textbf{Blazingly\ Fast\ Monitor\ with\ Status\ Reports\ Management}}}$
 
 ## 🎥 Create Status Report Demo (Click Picture)
 
